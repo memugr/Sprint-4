@@ -35,13 +35,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var _this = this;
+// GENERATE JOKES
 // Variables
 var jokes = document.querySelector('.joke');
 var btnNextJoke = document.getElementById('btn_nextjoke');
 var btnStart = document.getElementById('btn_start');
+var messageElement = document.getElementById('message');
 // Set initial button visibility
 btnNextJoke.style.display = 'none';
 btnStart.style.display = 'inline-block';
+// Generate jokes from the API
 var generateJokes = function () { return __awaiter(_this, void 0, void 0, function () {
     var setHeader, url, res, data, error_1;
     return __generator(this, function (_a) {
@@ -64,9 +67,13 @@ var generateJokes = function () { return __awaiter(_this, void 0, void 0, functi
                 if (jokes) {
                     jokes.innerHTML = data.joke;
                 }
+                // Clear the previous message
+                messageElement.innerHTML = '';
                 // Toggle button visibility
                 btnNextJoke.style.display = 'inline-block';
                 btnStart.style.display = 'none';
+                // Enable score buttons
+                enableScoreButtons();
                 return [3 /*break*/, 4];
             case 3:
                 error_1 = _a.sent();
@@ -76,6 +83,12 @@ var generateJokes = function () { return __awaiter(_this, void 0, void 0, functi
         }
     });
 }); };
+// Enable score buttons
+function enableScoreButtons() {
+    document.querySelectorAll('.score .btn').forEach(function (button) {
+        button.disabled = false; // Enable buttons
+    });
+}
 // Add event listener to the "Start" button
 if (btnStart) {
     btnStart.addEventListener('click', generateJokes);
@@ -84,3 +97,48 @@ if (btnStart) {
 if (btnNextJoke) {
     btnNextJoke.addEventListener('click', generateJokes);
 }
+// Array of results
+var reportJokes = [];
+// Random messages for each score
+var messages = {
+    1: ["Oh, that's unfortunate.",
+        "Better luck next time.",
+        "Not funny at all!",
+        "I hope the next joke is better!",
+        "I'm sorry to hear that.",
+        "*cries*",
+        "I did not put that one!"],
+    2: ["It's okay, I guess.",
+        "A bit of a chuckle!",
+        "Not too bad!",
+        "Meh.",
+        "I'm speechless… almost.",
+        "Wasn't it enough?",
+        "It could be better"],
+    3: ["Hilarious!",
+        "What a joke indeed!",
+        "Comedy gold here, right?!",
+        "Brilliant!",
+        "The next one's gonna be better!",
+        "Good one!",
+        "Awesome!"]
+};
+// Function for handling each emoji button click
+function report(score) {
+    var report = {
+        joke: jokes.innerHTML,
+        score: score,
+        date: new Date().toISOString()
+    };
+    // Add each report to the array
+    reportJokes.push(report);
+    console.log(reportJokes);
+    // Display a random message based on the score
+    var scoreMessages = messages[score];
+    var randomMessage = scoreMessages[Math.floor(Math.random() * scoreMessages.length)];
+    messageElement.innerHTML = randomMessage;
+}
+// Disable score buttons initially
+document.querySelectorAll('.score .btn').forEach(function (button) {
+    button.disabled = true; // Disable buttons
+});

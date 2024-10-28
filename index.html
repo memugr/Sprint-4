@@ -12,13 +12,20 @@
 <body>
     <div class="container">
         <div class="box">
-            <h1 class="display-5">Ready to laugh? &#128514;</h1>
+            <h1>Ready to laugh? &#128514;</h1>
             <div class="joke"></div><br>
             <button class="btn btn-outline-primary" id="btn_start">Start</button>
             <button class="btn btn-outline-primary" id="btn_nextjoke">Next joke</button>
+            <br>
+            <div class="score">
+                <button class="btn" onclick="report(1)" disabled><span class="emoji">&#128533</span></button>
+                <button class="btn" onclick="report(2)" disabled><span class="emoji">&#128528</span></button>
+                <button class="btn" onclick="report(3)" disabled><span class="emoji">&#128514</span></button>
+            </div>
+            <div class="message" id="message"></div>
         </div>
     </div>
 
-    <script src="src/main.js"></script>
+    <script src="src/main.js" async defer></script>
 </body>
 </html>

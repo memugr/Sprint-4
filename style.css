@@ -42,6 +42,7 @@ h1 {
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
     outline: none;
+    margin: 5px;
 }
 
 .btn:hover {
@@ -52,6 +53,18 @@ h1 {
 .joke {
     margin-top: 30px;
     font-size: 1.4rem;
+    color: #444;
+    line-height: 1.7;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.btn.emoji {
+    font-size: xx-large;
+}
+
+.message{
+    margin-top: 30px;
+    font-size: 1rem;
     color: #444;
     line-height: 1.7;
     font-family: 'Open Sans', sans-serif;
