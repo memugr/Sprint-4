@@ -142,3 +142,34 @@ function report(score) {
 document.querySelectorAll('.score .btn').forEach(function (button) {
     button.disabled = true; // Disable buttons
 });
+// WEATHER API
+var tempWeather;
+var weather = function () { return __awaiter(_this, void 0, void 0, function () {
+    var response, data, ico, icoURL, icoElement, error_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, , 4]);
+                return [4 /*yield*/, fetch('https://api.openweathermap.org/data/2.5/weather?lat=41.389&lon=2.159&units=metric&appid=e7704bc895b4a8d2dfd4a29d404285b6')];
+            case 1:
+                response = _a.sent();
+                return [4 /*yield*/, response.json()];
+            case 2:
+                data = _a.sent();
+                tempWeather = data.main.temp.toFixed(0) + 'ºC';
+                ico = data.weather[0].icon;
+                document.getElementById('temperature').innerHTML = tempWeather;
+                icoURL = "http://openweathermap.org/img/w/".concat(ico, ".png");
+                icoElement = document.createElement('img');
+                icoElement.src = icoURL;
+                document.getElementById('iconWeather').appendChild(icoElement);
+                return [3 /*break*/, 4];
+            case 3:
+                error_2 = _a.sent();
+                console.log("Error calling API:", error_2);
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
+weather();

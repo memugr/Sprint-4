@@ -3,7 +3,7 @@
 const jokes = document.querySelector('.joke') as HTMLElement;
 const btnNextJoke = document.getElementById('btn_nextjoke') as HTMLButtonElement;
 const btnStart = document.getElementById('btn_start') as HTMLButtonElement;
-const messageElement = document.getElementById('message') as HTMLElement; 
+const messageElement = document.getElementById('message') as HTMLElement;
 
 // Set initial button visibility
 btnNextJoke.style.display = 'none';
@@ -60,7 +60,7 @@ if (btnNextJoke) {
     btnNextJoke.addEventListener('click', generateJokes);
 }
 
-// 2. REPORT JOKES
+// REPORT JOKES
 interface JokeResult {
     joke: string;
     score: number;
@@ -72,26 +72,26 @@ const reportJokes: JokeResult[] = []
 
 // Random messages for each score
 const messages: { [key: number]: string[] } = {
-    1: ["Oh, that's unfortunate.", 
-        "Better luck next time.", 
-        "Not funny at all!", 
+    1: ["Oh, that's unfortunate.",
+        "Better luck next time.",
+        "Not funny at all!",
         "I hope the next joke is better!",
         "I'm sorry to hear that.",
         "*cries*",
         "I did not put that one!"],
 
-    2: ["It's okay, I guess.", 
-        "A bit of a chuckle!", 
-        "Not too bad!", 
-        "Meh.", 
-        "I'm speechless… almost.", 
+    2: ["It's okay, I guess.",
+        "A bit of a chuckle!",
+        "Not too bad!",
+        "Meh.",
+        "I'm speechless… almost.",
         "Wasn't it enough?",
         "It could be better"],
 
-    3: ["Hilarious!", 
-        "What a joke indeed!", 
-        "Comedy gold here, right?!", 
-        "Brilliant!", 
+    3: ["Hilarious!",
+        "What a joke indeed!",
+        "Comedy gold here, right?!",
+        "Brilliant!",
         "The next one's gonna be better!",
         "Good one!",
         "Awesome!"]
@@ -119,3 +119,28 @@ function report(score: number): void {
 document.querySelectorAll('.score .btn').forEach(button => {
     (button as HTMLButtonElement).disabled = true; // Disable buttons
 });
+
+// WEATHER API
+let tempWeather: string;
+
+const weather = async () => {
+    try {
+        const response = await fetch('https://api.openweathermap.org/data/2.5/weather?lat=41.389&lon=2.159&units=metric&appid=e7704bc895b4a8d2dfd4a29d404285b6');
+        const data = await response.json();
+        tempWeather = data.main.temp.toFixed(0) + 'ºC';
+        const ico = data.weather[0].icon;
+
+        document.getElementById('temperature')!.innerHTML = tempWeather;
+
+        const icoURL = `http://openweathermap.org/img/w/${ico}.png`;
+        const icoElement = document.createElement('img');
+        icoElement.src = icoURL;
+        document.getElementById('iconWeather')!.appendChild(icoElement);
+
+    } catch (error) {
+        console.log("Error calling API:", error)
+    }
+};
+
+weather()
+
