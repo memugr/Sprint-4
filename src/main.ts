@@ -1,4 +1,4 @@
-// GENERATE JOKES
+// GENERATE JOKES 1
 // Variables
 const jokes = document.querySelector('.joke') as HTMLElement;
 const btnNextJoke = document.getElementById('btn_nextjoke') as HTMLButtonElement;
@@ -50,14 +50,39 @@ function enableScoreButtons(): void {
     });
 }
 
-// Add event listener to the "Start" button
-if (btnStart) {
-    btnStart.addEventListener('click', generateJokes);
+// GENERATE JOKES 2: CHUCK NORRIS
+const generateJokes2 = async () => {
+    try {
+        const urlAPI = "https://api.chucknorris.io/jokes/random";
+        const res = await fetch(urlAPI);
+        const data = await res.json();
+        
+        // Display the joke
+        if (jokes) {
+            jokes.innerHTML = data.value;
+        }
+
+        // Clear the previous message
+        messageElement.innerHTML = '';
+
+        // Enable score buttons
+        enableScoreButtons();
+
+    } catch (error) {
+        console.log(`The error is ${error}`);
+    }
 }
 
-// Event listener for "Next Joke" button
+// Calling random jokes from either function
+const jokeCalling = () => [generateJokes, generateJokes2][Math.floor(Math.random() * 2)]();
+
+
+// Add event listener to the "Start" & "Next Joke" buttons
+if (btnStart) {
+    btnStart.addEventListener('click', jokeCalling)
+}
 if (btnNextJoke) {
-    btnNextJoke.addEventListener('click', generateJokes);
+    btnNextJoke.addEventListener('click', jokeCalling)
 }
 
 // REPORT JOKES

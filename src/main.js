@@ -35,7 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var _this = this;
-// GENERATE JOKES
+// GENERATE JOKES 1
 // Variables
 var jokes = document.querySelector('.joke');
 var btnNextJoke = document.getElementById('btn_nextjoke');
@@ -89,13 +89,45 @@ function enableScoreButtons() {
         button.disabled = false; // Enable buttons
     });
 }
-// Add event listener to the "Start" button
+// GENERATE JOKES 2: CHUCK NORRIS
+var generateJokes2 = function () { return __awaiter(_this, void 0, void 0, function () {
+    var urlAPI, res, data, error_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, , 4]);
+                urlAPI = "https://api.chucknorris.io/jokes/random";
+                return [4 /*yield*/, fetch(urlAPI)];
+            case 1:
+                res = _a.sent();
+                return [4 /*yield*/, res.json()];
+            case 2:
+                data = _a.sent();
+                // Display the joke
+                if (jokes) {
+                    jokes.innerHTML = data.value;
+                }
+                // Clear the previous message
+                messageElement.innerHTML = '';
+                // Enable score buttons
+                enableScoreButtons();
+                return [3 /*break*/, 4];
+            case 3:
+                error_2 = _a.sent();
+                console.log("The error is ".concat(error_2));
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
+// Calling random jokes from either function
+var jokeCalling = function () { return [generateJokes, generateJokes2][Math.floor(Math.random() * 2)](); };
+// Add event listener to the "Start" & "Next Joke" buttons
 if (btnStart) {
-    btnStart.addEventListener('click', generateJokes);
+    btnStart.addEventListener('click', jokeCalling);
 }
-// Event listener for "Next Joke" button
 if (btnNextJoke) {
-    btnNextJoke.addEventListener('click', generateJokes);
+    btnNextJoke.addEventListener('click', jokeCalling);
 }
 // Array of results
 var reportJokes = [];
@@ -145,7 +177,7 @@ document.querySelectorAll('.score .btn').forEach(function (button) {
 // WEATHER API
 var tempWeather;
 var weather = function () { return __awaiter(_this, void 0, void 0, function () {
-    var response, data, ico, icoURL, icoElement, error_2;
+    var response, data, ico, icoURL, icoElement, error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -165,8 +197,8 @@ var weather = function () { return __awaiter(_this, void 0, void 0, function () 
                 document.getElementById('iconWeather').appendChild(icoElement);
                 return [3 /*break*/, 4];
             case 3:
-                error_2 = _a.sent();
-                console.log("Error calling API:", error_2);
+                error_3 = _a.sent();
+                console.log("Error calling API:", error_3);
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
