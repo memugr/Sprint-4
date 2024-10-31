@@ -73,17 +73,15 @@ const generateJokes2 = async () => {
     }
 }
 
-// Calling random jokes from either function
-const jokeCalling = () => [generateJokes, generateJokes2][Math.floor(Math.random() * 2)]();
-
-
-// Add event listener to the "Start" & "Next Joke" buttons
-if (btnStart) {
-    btnStart.addEventListener('click', jokeCalling)
+// Function to call a random joke generator and change background
+const jokeCalling = () => {
+    [generateJokes, generateJokes2][Math.floor(Math.random() * 2)]();
+    backgroundChange();
 }
-if (btnNextJoke) {
-    btnNextJoke.addEventListener('click', jokeCalling)
-}
+
+// Event listeners for the "Start" & "Next Joke" buttons
+if (btnStart) btnStart.addEventListener('click', jokeCalling);
+if (btnNextJoke) btnNextJoke.addEventListener('click', jokeCalling);
 
 // REPORT JOKES
 interface JokeResult {
@@ -169,3 +167,23 @@ const weather = async () => {
 
 weather()
 
+// BACKGROUND CHANGE
+function backgroundChange() {
+    const blobs: string[] = [
+        "img/blob1.svg",
+        "img/blob2.svg",
+        "img/blob3.svg",
+        "img/blob4.svg",
+        "img/blob5.svg",
+        "img/blob6.svg",
+        "img/blob7.svg",
+        "img/blob8.svg",
+    ]
+
+    const randomBackground: number = Math.floor(Math.random() * blobs.length);
+    const selectedBlob: string = blobs[randomBackground];
+    const blobElement = document.querySelector(".blob") as HTMLElement; 
+    if (blobElement) {
+        blobElement.style.backgroundImage = `url(${selectedBlob})`
+    }
+}

@@ -120,15 +120,16 @@ var generateJokes2 = function () { return __awaiter(_this, void 0, void 0, funct
         }
     });
 }); };
-// Calling random jokes from either function
-var jokeCalling = function () { return [generateJokes, generateJokes2][Math.floor(Math.random() * 2)](); };
-// Add event listener to the "Start" & "Next Joke" buttons
-if (btnStart) {
+// Function to call a random joke generator and change background
+var jokeCalling = function () {
+    [generateJokes, generateJokes2][Math.floor(Math.random() * 2)]();
+    backgroundChange();
+};
+// Event listeners for the "Start" & "Next Joke" buttons
+if (btnStart)
     btnStart.addEventListener('click', jokeCalling);
-}
-if (btnNextJoke) {
+if (btnNextJoke)
     btnNextJoke.addEventListener('click', jokeCalling);
-}
 // Array of results
 var reportJokes = [];
 // Random messages for each score
@@ -205,3 +206,22 @@ var weather = function () { return __awaiter(_this, void 0, void 0, function () 
     });
 }); };
 weather();
+// BACKGROUND CHANGE
+function backgroundChange() {
+    var blobs = [
+        "img/blob1.svg",
+        "img/blob2.svg",
+        "img/blob3.svg",
+        "img/blob4.svg",
+        "img/blob5.svg",
+        "img/blob6.svg",
+        "img/blob7.svg",
+        "img/blob8.svg",
+    ];
+    var randomBackground = Math.floor(Math.random() * blobs.length);
+    var selectedBlob = blobs[randomBackground];
+    var blobElement = document.querySelector(".blob");
+    if (blobElement) {
+        blobElement.style.backgroundImage = "url(".concat(selectedBlob, ")");
+    }
+}
