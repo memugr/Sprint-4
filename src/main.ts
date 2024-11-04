@@ -12,36 +12,40 @@ btnStart.style.display = 'inline-block';
 // Generate jokes from the API
 const generateJokes = async () => {
     try {
-        const setHeader = {
-            headers: {
-                Accept: "application/json"
+        const res = await fetch("https://icanhazdadjoke.com",
+            {
+                headers: { Accept: "application/json" }
             }
-        };
+        );
 
-        // Fetching API with async await
-        const url = "https://icanhazdadjoke.com";
-        const res = await fetch(url, setHeader);
+        if (!res.ok) throw new Error("Failed to fetch dad joke.");
         const data = await res.json();
 
-        // Display the joke
-        if (jokes) {
-            jokes.innerHTML = data.joke;
-        }
-
-        // Clear the previous message
-        messageElement.innerHTML = '';
-
-        // Toggle button visibility
-        btnNextJoke.style.display = 'inline-block';
-        btnStart.style.display = 'none';
-
-        // Enable score buttons
-        enableScoreButtons();
+        //Display joke
+        displayJoke(data.joke);
+    } catch (error) {
+        console.error(`Error fetching dad joke: ${error}`);
+        jokes.innerHTML = "Sorry, couldn't load a joke. Try again!";
     }
-    catch (error) {
-        console.log(`The error is ${error}`);
+};
+
+// Display the joke
+function displayJoke(joke: string) {
+    if (jokes) {
+        jokes.innerHTML = joke;
     }
+    
+    // Clear the previous message
+    messageElement.innerHTML = '';
+
+    // Toggle button visibility
+    btnNextJoke.style.display = 'inline-block';
+    btnStart.style.display = 'none';
+
+    // Enable score buttons
+    enableScoreButtons();
 }
+
 
 // Enable score buttons
 function enableScoreButtons(): void {
@@ -55,23 +59,16 @@ const generateJokesNorris = async () => {
     try {
         const urlAPI = "https://api.chucknorris.io/jokes/random";
         const res = await fetch(urlAPI);
+        if (!res.ok) throw new Error("Failed to fetch Chuck Norris joke.");
         const data = await res.json();
-        
-        // Display the joke
-        if (jokes) {
-            jokes.innerHTML = data.value;
-        }
 
-        // Clear the previous message
-        messageElement.innerHTML = '';
-
-        // Enable score buttons
-        enableScoreButtons();
-
+        //Displaying joke
+        displayJoke(data.value);  
     } catch (error) {
-        console.log(`The error is ${error}`);
+        console.error(`Error fetching Chuck Norris joke: ${error}`);
+        jokes.innerHTML = "Sorry, couldn't load a Chuck Norris joke. Try again!";
     }
-}
+};
 
 // Function to call a random joke generator and change background
 const jokeCalling = () => {
@@ -182,7 +179,7 @@ function backgroundChange() {
 
     const randomBackground: number = Math.floor(Math.random() * blobs.length);
     const selectedBlob: string = blobs[randomBackground];
-    const blobElement = document.querySelector(".blob") as HTMLElement; 
+    const blobElement = document.querySelector(".blob") as HTMLElement;
     if (blobElement) {
         blobElement.style.backgroundImage = `url(${selectedBlob})`
     }

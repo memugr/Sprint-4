@@ -46,43 +46,46 @@ btnNextJoke.style.display = 'none';
 btnStart.style.display = 'inline-block';
 // Generate jokes from the API
 var generateJokes = function () { return __awaiter(_this, void 0, void 0, function () {
-    var setHeader, url, res, data, error_1;
+    var res, data, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 3, , 4]);
-                setHeader = {
-                    headers: {
-                        Accept: "application/json"
-                    }
-                };
-                url = "https://icanhazdadjoke.com";
-                return [4 /*yield*/, fetch(url, setHeader)];
+                return [4 /*yield*/, fetch("https://icanhazdadjoke.com", {
+                        headers: { Accept: "application/json" }
+                    })];
             case 1:
                 res = _a.sent();
+                if (!res.ok)
+                    throw new Error("Failed to fetch dad joke.");
                 return [4 /*yield*/, res.json()];
             case 2:
                 data = _a.sent();
-                // Display the joke
-                if (jokes) {
-                    jokes.innerHTML = data.joke;
-                }
-                // Clear the previous message
-                messageElement.innerHTML = '';
-                // Toggle button visibility
-                btnNextJoke.style.display = 'inline-block';
-                btnStart.style.display = 'none';
-                // Enable score buttons
-                enableScoreButtons();
+                //Display joke
+                displayJoke(data.joke);
                 return [3 /*break*/, 4];
             case 3:
                 error_1 = _a.sent();
-                console.log("The error is ".concat(error_1));
+                console.error("Error fetching dad joke: ".concat(error_1));
+                jokes.innerHTML = "Sorry, couldn't load a joke. Try again!";
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
     });
 }); };
+// Display the joke
+function displayJoke(joke) {
+    if (jokes) {
+        jokes.innerHTML = joke;
+    }
+    // Clear the previous message
+    messageElement.innerHTML = '';
+    // Toggle button visibility
+    btnNextJoke.style.display = 'inline-block';
+    btnStart.style.display = 'none';
+    // Enable score buttons
+    enableScoreButtons();
+}
 // Enable score buttons
 function enableScoreButtons() {
     document.querySelectorAll('.score .btn').forEach(function (button) {
@@ -100,21 +103,18 @@ var generateJokesNorris = function () { return __awaiter(_this, void 0, void 0, 
                 return [4 /*yield*/, fetch(urlAPI)];
             case 1:
                 res = _a.sent();
+                if (!res.ok)
+                    throw new Error("Failed to fetch Chuck Norris joke.");
                 return [4 /*yield*/, res.json()];
             case 2:
                 data = _a.sent();
-                // Display the joke
-                if (jokes) {
-                    jokes.innerHTML = data.value;
-                }
-                // Clear the previous message
-                messageElement.innerHTML = '';
-                // Enable score buttons
-                enableScoreButtons();
+                //Displaying joke
+                displayJoke(data.value);
                 return [3 /*break*/, 4];
             case 3:
                 error_2 = _a.sent();
-                console.log("The error is ".concat(error_2));
+                console.error("Error fetching Chuck Norris joke: ".concat(error_2));
+                jokes.innerHTML = "Sorry, couldn't load a Chuck Norris joke. Try again!";
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
         }
