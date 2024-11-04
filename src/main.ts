@@ -51,7 +51,7 @@ function enableScoreButtons(): void {
 }
 
 // GENERATE JOKES 2: CHUCK NORRIS
-const generateJokes2 = async () => {
+const generateJokesNorris = async () => {
     try {
         const urlAPI = "https://api.chucknorris.io/jokes/random";
         const res = await fetch(urlAPI);
@@ -75,7 +75,7 @@ const generateJokes2 = async () => {
 
 // Function to call a random joke generator and change background
 const jokeCalling = () => {
-    [generateJokes, generateJokes2][Math.floor(Math.random() * 2)]();
+    [generateJokes, generateJokesNorris][Math.floor(Math.random() * 2)]();
     backgroundChange();
 }
 

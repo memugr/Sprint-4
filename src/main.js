@@ -90,7 +90,7 @@ function enableScoreButtons() {
     });
 }
 // GENERATE JOKES 2: CHUCK NORRIS
-var generateJokes2 = function () { return __awaiter(_this, void 0, void 0, function () {
+var generateJokesNorris = function () { return __awaiter(_this, void 0, void 0, function () {
     var urlAPI, res, data, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -122,7 +122,7 @@ var generateJokes2 = function () { return __awaiter(_this, void 0, void 0, funct
 }); };
 // Function to call a random joke generator and change background
 var jokeCalling = function () {
-    [generateJokes, generateJokes2][Math.floor(Math.random() * 2)]();
+    [generateJokes, generateJokesNorris][Math.floor(Math.random() * 2)]();
     backgroundChange();
 };
 // Event listeners for the "Start" & "Next Joke" buttons
